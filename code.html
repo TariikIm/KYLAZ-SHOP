@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KYLLA SHOP - Productos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #eee;
+      margin: 20px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    header, footer {
+      text-align: center;
+      padding: 15px 0;
+      background-color: #222;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    /* Animated gradient text for header */
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    header h1 {
+      font-weight: bold;
+      font-size: 3em;
+      background: linear-gradient(270deg, #FF4500, #FFD700, #32CD32, #00BFFF, #8A2BE2, #DC143C, #228B22);
+      background-size: 1400% 1400%;
+      animation: gradientAnimation 15s ease infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+    section {
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    /* Section borders and heading colors */
+    #item-especial {
+      border: 2px solid #FFD700;
+    }
+    #item-especial h2 {
+      color: #FFD700;
+    }
+    #variedad {
+      border: 2px solid #00BFFF;
+    }
+    #variedad h2 {
+      color: #00BFFF;
+    }
+    #armaduras {
+      border: 2px solid #8A2BE2;
+    }
+    #armaduras h2 {
+      color: #8A2BE2;
+    }
+    #espadas {
+      border: 2px solid #DC143C;
+    }
+    #espadas h2 {
+      color: #DC143C;
+    }
+    #herramientas {
+      border: 2px solid #228B22;
+    }
+    #herramientas h2 {
+      color: #228B22;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    a.image-link {
+      margin-left: 10px;
+      padding: 5px 12px;
+      background-color: #0eff00;
+      color: #000;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    a.image-link:hover {
+      background-color: #00cc00;
+    }
+    span.price {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>KYLLA SHOP</h1>
+  </header>
+
+  <!-- BLOQUE: ITEM ESPECIAL -->
+  <section id="item-especial">
+    <h2>ITEM ESPECIAL</h2>
+    <ul>
+      <li>
+        CASCO LEVIATÁN → <span class="price" style="color:#FF4500;">20 €</span>
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-143335.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- BLOQUE: VARIEDAD -->
+  <section id="variedad">
+    <h2>VARIEDAD</h2>
+    <ul>
+      <li>
+        100B → <span class="price" style="color:#32CD32;">4,50 €</span> [Máximo de 1,1 Trillón]
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-132213-2.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        1000 Niveles XP → <span class="price" style="color:#32CD32;">0,50 €</span> [Sin Límite]
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-142155.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        x64 Generador Gólem de Hierro → <span class="price" style="color:#FFA500;">1,50 €</span> [Máximo de 1400 Generadores]
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-134337.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        x64 Manzana Dorada Encantada → <span class="price" style="color:#32CD32;">0,70 €</span>
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-134400.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- BLOQUE: ARMADURAS -->
+  <section id="armaduras">
+    <h2>ARMADURAS</h2>
+    <ul>
+      <li>
+        Armadura Dragón → <span class="price" style="color:#FF4500;">15 €</span> [Botas 2,50 Pantalón 5€ Pechera 5€ Casco 2,50€]
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140944.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        Armadura Hydra → <span class="price" style="color:#FF8C00;">12,50 €</span> [Botas 2 Pantalón 4,25€ Pechera 4,25€ Casco 2€]
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140937.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        Armadura Minotauro → <span class="price" style="color:#FFA500;">8,50 €</span> [Botas 1€ Pantalón 3,25€ Pechera 3,25€ Casco 1€]
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140928.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        Armadura Goblin → <span class="price" style="color:#32CD32;">6 €</span> [Botas 1€ Pantalón 2€ Pechera 2€ Casco 1€]
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-142700.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- BLOQUE: ESPADAS -->
+  <section id="espadas">
+    <h2>ESPADAS</h2>
+    <ul>
+      <li>
+        Espada Fénix → <span class="price" style="color:#FF4500;">20 €</span>
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-02-001248.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        Espada Dragon → <span class="price" style="color:#FFA500;">10 €</span>
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-132144.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        Espada Hydra → <span class="price" style="color:#FF8C00;">6,50 €</span>
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-142940.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        Espada Minotauro → <span class="price" style="color:#FFA500;">3,50 €</span>
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140800.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        Espada Goblin → <span class="price" style="color:#32CD32;">1,50 €</span>
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140751.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- BLOQUE: HERRAMIENTAS -->
+  <section id="herramientas">
+    <h2>HERRAMIENTAS</h2>
+    <ul>
+      <li>
+        Pico Dragón → <span class="price" style="color:#FF4500;">7 €</span>
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-143203.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        Pico Hydra → <span class="price" style="color:#FFA500;">4 €</span>
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140912.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        Pico Minotauro → <span class="price" style="color:#FF8C00;">2,50 €</span>
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140905.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+      <li>
+        Hacha Dragón → <span class="price" style="color:#FFA500;">4,50 €</span>
+        <a href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140921.png" target="_blank" class="image-link">Imagen aquí</a>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Contacto Discord: theonlyreaal | keryonhell</p>
+  </footer>
+</body>
+</html>
