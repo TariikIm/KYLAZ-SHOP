@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Frabian's Store - Productos Exclusivos</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Electrolize&amp;family=Orbitron:wght@400;700&amp;family=Roboto+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<style>
+    :root {
+      --bg-dark: #0a0a0a;
+      --bg-medium: #1a1a1a;
+      --bg-light: #2a2a2a;
+      --text-light: #e0e0e0;
+      --text-medium: #bbb;
+      --accent-cyan: #00FFFF; /* Cian vibrante */
+      --accent-magenta: #FF00FF; /* Magenta vibrante */
+      --accent-green: #00FF00; /* Verde neón */
+      --button-primary: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+      --button-hover: linear-gradient(90deg, var(--accent-magenta), var(--accent-cyan));
+      --price-color: var(--accent-green);
+      --border-glow: rgba(0, 255, 255, 0.5);
+      --shadow-strong: rgba(0, 0, 0, 0.6);
+      --low-stock: #FFD700; /* Oro para bajo stock */
+      --out-of-stock: #FF4500; /* Naranja rojizo para agotado */
+    }
+
+    /* Keyframes for RGB/Gradient Animations */
+    @keyframes rgb-glow {
+      0% { box-shadow: 0 0 10px var(--accent-cyan), 0 0 20px var(--accent-magenta); }
+      33% { box-shadow: 0 0 10px var(--accent-magenta), 0 0 20px var(--accent-green); }
+      66% { box-shadow: 0 0 10px var(--accent-green), 0 0 20px var(--accent-cyan); }
+      100% { box-shadow: 0 0 10px var(--accent-cyan), 0 0 20px var(--accent-magenta); }
+    }
+
+    @keyframes text-rgb-glow {
+      0% { text-shadow: 0 0 8px var(--accent-cyan); }
+      33% { text-shadow: 0 0 8px var(--accent-magenta); }
+      66% { text-shadow: 0 0 8px var(--accent-green); }
+      100% { text-shadow: 0 0 8px var(--accent-cyan); }
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    @keyframes pulse-border {
+      0% { border-color: var(--accent-cyan); }
+      50% { border-color: var(--accent-magenta); }
+      100% { border-color: var(--accent-cyan); }
+    }
+
+    @keyframes preloader-fade-out {
+      0% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    @keyframes preloader-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    body {
+      font-family: 'Electrolize', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    #preloader.hidden {
+      animation: preloader-fade-out 0.5s forwards;
+    }
+
+    .spinner {
+      border: 8px solid rgba(255, 255, 255, 0.2);
+      border-top: 8px solid var(--accent-cyan);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: preloader-spin 1s linear infinite;
+    }
+
+    /* Particles.js Container */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      background-color: var(--bg-dark);
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 30px auto;
+      padding: 0 25px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .payment-info-banner {
+      text-align: center;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+      background-size: 200% 200%;
+      animation: gradient-shift 5s ease infinite alternate;
+      color: var(--bg-dark);
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2em;
+      font-weight: 700;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+      border: 1px solid var(--accent-cyan);
+    }
+
+    .payment-info-banner i {
+      margin-right: 10px;
+      color: var(--bg-dark);
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 0;
+      background: var(--bg-medium);
+      border-radius: 15px;
+      margin-bottom: 60px;
+      box-shadow: 0 0 25px var(--border-glow);
+      border: 2px solid var(--accent-cyan);
+      position: relative;
+      overflow: hidden;
+      animation: rgb-glow 6s infinite alternate;
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 4.5em;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta), var(--accent-green));
+      background-size: 300% 300%;
+      animation: gradient-shift 8s ease infinite alternate;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+      letter-spacing: 4px;
+      text-shadow: 0 0 15px var(--accent-cyan), 0 0 25px var(--accent-magenta);
+    }
+
+    section {
+      padding: 35px;
+      margin-bottom: 50px;
+      border-radius: 15px;
+      background: var(--bg-medium);
+      box-shadow: 0 0 20px var(--border-glow);
+      border: 2px solid var(--accent-magenta);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    section:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 30px var(--accent-green);
+    }
+
+    section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 3em;
+      color: var(--accent-cyan);
+      margin-top: 0;
+      margin-bottom: 40px;
+      text-align: center;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px var(--accent-cyan);
+      animation: text-rgb-glow 5s infinite alternate;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    li {
+      background-color: var(--bg-light);
+      padding: 25px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      border: 1px solid var(--accent-cyan);
+      position: relative;
+      overflow: hidden;
+    }
+
+    li::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--accent-cyan), var(--accent-magenta), var(--accent-green));
+      background-size: 300% 300%;
+      animation: gradient-shift 10s ease infinite alternate;
+      z-index: 0;
+      border-radius: 12px;
+      filter: blur(8px);
+      opacity: 0.4;
+    }
+
+    li:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 0 25px var(--accent-magenta);
+      border-color: var(--accent-magenta);
+    }
+
+    .product-info {
+      flex-grow: 1;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .product-info strong {
+      font-size: 1.5em;
+      color: var(--text-light);
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+      text-shadow: 0 0 8px var(--accent-cyan);
+    }
+
+    .product-info p {
+      font-size: 1em;
+      color: var(--text-medium);
+      margin-bottom: 12px;
+    }
+
+    span.price {
+      font-weight: 700;
+      color: var(--price-color);
+      font-size: 1.8em;
+      display: block;
+      margin-top: 15px;
+      text-shadow: 0 0 10px var(--price-color);
+    }
+
+    .product-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      width: 100%;
+      justify-content: flex-end;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    a.image-link, button.buy-button {
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      white-space: nowrap;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1em;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    a.image-link {
+      background-color: #444;
+      color: var(--text-light);
+    }
+
+    a.image-link:hover {
+      background-color: #666;
+      transform: translateY(-3px);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    }
+
+    button.buy-button {
+      background: var(--button-primary);
+      background-size: 200% 200%;
+      color: var(--bg-dark);
+      animation: gradient-shift 4s ease infinite alternate;
+    }
+
+    button.buy-button:hover {
+      background: var(--button-hover);
+      background-size: 200% 200%;
+      animation: gradient-shift 4s ease infinite alternate;
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px var(--accent-magenta);
+    }
+
+    button.buy-button:disabled {
+      background: var(--out-of-stock);
+      color: #fff;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+      animation: none;
+    }
+
+    /* Stock Indicator */
+    .stock-indicator {
+      font-size: 1em;
+      color: var(--text-medium);
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Roboto Mono', monospace;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stock-indicator.low {
+      color: var(--low-stock);
+      font-weight: 700;
+      text-shadow: 0 0 8px var(--low-stock);
+    }
+
+    .stock-indicator.out-of-stock {
+      color: var(--out-of-stock);
+      font-weight: 700;
+      text-shadow: 0 0 8px var(--out-of-stock);
+    }
+
+    .stock-indicator i {
+      font-size: 0.9em;
+    }
+
+    /* About/Rules Section */
+    .about-section {
+      background-color: var(--bg-medium);
+      padding: 35px;
+      border-radius: 15px;
+      margin-bottom: 50px;
+      box-shadow: 0 0 20px var(--border-glow);
+      border: 2px solid var(--accent-green);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-section:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 30px var(--accent-cyan);
+    }
+
+    .about-section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 2.8em;
+      color: var(--accent-green);
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px var(--accent-green);
+      animation: text-rgb-glow 5s infinite alternate;
+    }
+
+    .about-section p {
+      font-size: 1.1em;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      color: var(--text-medium);
+    }
+
+    .about-section ul {
+      list-style-type: none;
+      padding-left: 0;
+      text-align: left;
+      margin-top: 25px;
+      display: block;
+    }
+
+    .about-section ul li {
+      background-color: transparent;
+      box-shadow: none;
+      border: none;
+      padding: 8px 0;
+      margin-bottom: 5px;
+      font-size: 1.05em;
+      color: var(--text-light);
+      position: relative;
+      padding-left: 25px;
+    }
+
+    .about-section ul li::before {
+      content: '\f00c';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      color: var(--accent-green);
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9em;
+    }
+
+    /* Footer and Contact */
+    footer {
+      margin-top: 60px;
+      padding: 35px 0;
+      background-color: var(--bg-medium);
+      border-radius: 15px;
+      box-shadow: 0 0 25px var(--border-glow);
+      border: 2px solid var(--accent-magenta);
+      text-align: center;
+      animation: rgb-glow 6s infinite alternate;
+    }
+
+    footer p {
+      margin-bottom: 25px;
+      font-size: 1.2em;
+      color: var(--text-light);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+    }
+
+    .social-links a {
+      color: var(--text-light);
+      font-size: 1.6em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      border-radius: 8px;
+      background-color: var(--bg-light);
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--accent-cyan);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    .social-links a:hover {
+      background-color: #5865F2;
+      color: #fff;
+      transform: scale(1.08);
+      box-shadow: 0 0 20px #5865F2;
+      border-color: #5865F2;
+    }
+
+    /* Modal Styles - Adjusted for new aesthetic */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.85);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: var(--bg-medium);
+      margin: auto;
+      padding: 40px;
+      border: 2px solid var(--accent-cyan);
+      width: 85%;
+      max-width: 550px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px var(--accent-magenta);
+      text-align: center;
+      position: relative;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .close-button {
+      color: var(--accent-cyan);
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      text-shadow: 0 0 10px var(--accent-cyan);
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+      color: var(--accent-magenta);
+      text-shadow: 0 0 10px var(--accent-magenta);
+    }
+
+    .modal-content h3 {
+      color: var(--accent-green);
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 25px;
+      font-size: 2.2em;
+      text-shadow: 0 0 10px var(--accent-green);
+    }
+
+    .modal-content p {
+      margin-bottom: 30px;
+      font-size: 1.15em;
+      line-height: 1.6;
+      color: var(--text-light);
+    }
+
+    .modal-content p strong {
+      color: var(--accent-cyan);
+      text-shadow: 0 0 5px var(--accent-cyan);
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .modal-buttons button, .modal-buttons a {
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      font-size: 1.1em;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    .modal-buttons .btn-discord {
+      background-color: #5865F2;
+      color: #fff;
+    }
+
+    .modal-buttons .btn-discord:hover {
+      background-color: #4752C4;
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px #5865F2;
+    }
+
+    .modal-buttons .btn-cancel {
+      background-color: #444;
+      color: var(--text-light);
+    }
+
+    .modal-buttons .btn-cancel:hover {
+      background-color: #666;
+      transform: translateY(-3px);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      header h1 {
+        font-size: 3.8em;
+      }
+      section h2 {
+        font-size: 2.5em;
+      }
+      ul {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 15px;
+      }
+      header h1 {
+        font-size: 3em;
+        letter-spacing: 2px;
+      }
+      section h2 {
+        font-size: 2em;
+        letter-spacing: 1px;
+      }
+      ul {
+        grid-template-columns: 1fr;
+      }
+      li {
+        padding: 20px;
+      }
+      .product-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      a.image-link, button.buy-button {
+        width: 100%;
+        text-align: center;
+      }
+      .modal-content {
+        width: 90%;
+        padding: 30px;
+      }
+      .modal-buttons {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 10px;
+      }
+      header, footer, section, .about-section {
+        margin-bottom: 30px;
+        padding: 25px;
+      }
+      header h1 {
+        font-size: 2.5em;
+      }
+      section h2 {
+        font-size: 1.8em;
+      }
+      .social-links a {
+        font-size: 1.4em;
+        padding: 10px 18px;
+      }
+      .modal-content h3 {
+        font-size: 1.8em;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Preloader -->
+<div id="preloader">
+<div class="spinner"></div>
+</div>
+<!-- Particles.js Container -->
+<div id="particles-js"></div>
+<div class="container">
+<!-- Payment Info Banner -->
+<div class="payment-info-banner">
+<i class="fab fa-paypal"></i> Métodos de Pago: Solo PayPal
+    </div>
+<header>
+<h1>Frabian's Store</h1>
+</header>
+<section id="variedad">
+<h2>VARIEDAD</h2>
+<ul id="variedad-list">
+<li data-stock="Infinity">
+<div class="product-info">
+<strong>100B</strong>
+<p>[Máximo de 1,1 Trillón]</p>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">6.26 €</span>
+<span style="color:lime; font-weight:bold;">4.50 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -39%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-132213-2.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="4.50" data-product="100B"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="Infinity">Stock: <span class="stock-value">Ilimitado</span></div>
+</li>
+<li data-stock="Infinity">
+<div class="product-info">
+<strong>1000 Niveles XP</strong>
+<p>[Sin Límite]</p>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">0.70 €</span>
+<span style="color:lime; font-weight:bold;">0.50 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -39%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2222/09/captura-de-pantalla-2025-09-07-142155.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="0.50" data-product="1000 Niveles XP"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="Infinity">Stock: <span class="stock-value">Ilimitado</span></div>
+</li>
+<li data-stock="Infinity">
+<div class="product-info">
+<strong>x64 Generador Gólem de Hierro</strong>
+<p>[Máximo de 1400 Generadores]</p>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">1.98 €</span>
+<span style="color:lime; font-weight:bold;">1.50 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -32%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-134337.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="1.50" data-product="x64 Generador Gólem de Hierro"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="Infinity">Stock: <span class="stock-value">Ilimitado</span></div>
+</li>
+<li data-stock="Infinity">
+<div class="product-info">
+<strong>x64 Manzana Dorada Encantada</strong>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">0.93 €</span>
+<span style="color:lime; font-weight:bold;">0.70 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -33%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-134400.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="0.70" data-product="x64 Manzana Dorada Encantada"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="Infinity">Stock: <span class="stock-value">Ilimitado</span></div>
+</li>
+</ul>
+</section>
+<section id="armaduras">
+<h2>ARMADURAS</h2>
+<ul id="armaduras-list">
+<li data-stock="10">
+<div class="product-info">
+<strong>Armadura Dragón</strong>
+<p>[Botas 2,50 Pantalón 5€ Pechera 5€ Casco 2,50€]</p>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">20.10 €</span>
+<span style="color:lime; font-weight:bold;">15.00 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -34%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140944.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="15.00" data-product="Armadura Dragón"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+<li data-stock="10">
+<div class="product-info">
+<strong>Armadura Hydra</strong>
+<p>[Botas 2 Pantalón 4,25€ Pechera 4,25€ Casco 2€]</p>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">17.25 €</span>
+<span style="color:lime; font-weight:bold;">12.50 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -38%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140937.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="12.50" data-product="Armadura Hydra"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+<li data-stock="10">
+<div class="product-info">
+<strong>Armadura Minotauro</strong>
+<p>[Botas 1€ Pantalón 3,25€ Pechera 3,25€ Casco 1€]</p>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">11.22 €</span>
+<span style="color:lime; font-weight:bold;">8.50 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -32%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140928.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="8.50" data-product="Armadura Minotauro"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+<li data-stock="10">
+<div class="product-info">
+<strong>Armadura Goblin</strong>
+<p>[Botas 1€ Pantalón 2€ Pechera 2€ Casco 1€]</p>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">7.86 €</span>
+<span style="color:lime; font-weight:bold;">6.00 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -31%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-142700.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="6.00" data-product="Armadura Goblin"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+</ul>
+</section>
+<section id="espadas">
+<h2>ESPADAS</h2>
+<ul id="espadas-list">
+<li data-stock="10">
+<div class="product-info">
+<strong>Espada Fénix</strong>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">26.60 €</span>
+<span style="color:lime; font-weight:bold;">20.00 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -33%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-02-001248.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="20.00" data-product="Espada Fénix"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+<li data-stock="10">
+<div class="product-info">
+<strong>Espada Dragon</strong>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">13.70 €</span>
+<span style="color:lime; font-weight:bold;">10.00 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -37%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-132144.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="10.00" data-product="Espada Dragon"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+<li data-stock="10">
+<div class="product-info">
+<strong>Espada Hydra</strong>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">9.04 €</span>
+<span style="color:lime; font-weight:bold;">6.50 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -39%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-142940.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="6.50" data-product="Espada Hydra"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+<li data-stock="10">
+<div class="product-info">
+<strong>Espada Minotauro</strong>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">4.62 €</span>
+<span style="color:lime; font-weight:bold;">3.50 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -32%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140800.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="3.50" data-product="Espada Minotauro"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+<li data-stock="10">
+<div class="product-info">
+<strong>Espada Goblin</strong>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">2.08 €</span>
+<span style="color:lime; font-weight:bold;">1.50 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -39%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140751.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="1.50" data-product="Espada Goblin"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+</ul>
+</section>
+<section id="herramientas">
+<h2>HERRAMIENTAS</h2>
+<ul id="herramientas-list">
+<li data-stock="10">
+<div class="product-info">
+<strong>Pico Dragón</strong>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">9.73 €</span>
+<span style="color:lime; font-weight:bold;">7.00 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -39%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-143203.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="7.00" data-product="Pico Dragón"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+<li data-stock="10">
+<div class="product-info">
+<strong>Pico Hydra</strong>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">5.24 €</span>
+<span style="color:lime; font-weight:bold;">4.00 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -31%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140912.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="4.00" data-product="Pico Hydra"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+<li data-stock="10">
+<div class="product-info">
+<strong>Pico Minotauro</strong>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">3.48 €</span>
+<span style="color:lime; font-weight:bold;">2.50 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -39%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140905.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="2.50" data-product="Pico Minotauro"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+<li data-stock="10">
+<div class="product-info">
+<strong>Hacha Dragón</strong>
+<span class="price">
+<span style="color:red; text-decoration: line-through; font-weight:bold;">6.30 €</span>
+<span style="color:lime; font-weight:bold;">4.50 €</span>
+<span style="background:yellow; color:black; font-weight:bold; padding:2px 6px; border-radius:4px;">¡OFERTA -40%!</span>
+</span>
+</div>
+<div class="product-actions">
+<a class="image-link" href="https://kylazshop.wordpress.com/wp-content/uploads/2025/09/captura-de-pantalla-2025-09-07-140921.png" target="_blank"><i class="fas fa-image"></i> Imagen</a>
+<button class="buy-button" data-price="4.50" data-product="Hacha Dragón"><i class="fas fa-shopping-cart"></i> Comprar</button>
+</div>
+<div class="stock-indicator" data-initial-stock="10">Stock: <span class="stock-value">10</span></div>
+</li>
+</ul>
+</section>
+<section class="about-section" id="about">
+<h2>SOBRE NOSOTROS Y NORMAS</h2>
+<p>Bienvenido a Frabian's Store, tu tienda de confianza para productos exclusivos. Somos una entidad independiente y operamos fuera del servidor principal de Rekiem MC.</p>
+<p>Nuestra misión es ofrecerte los mejores artículos con un servicio rápido y eficiente. Sin embargo, es crucial que entiendas nuestras políticas:</p>
+<ul>
+<li>Todas las compras se realizan bajo tu propio riesgo.</li>
+<li>No estamos afiliados directamente con el servidor Rekiem MC y nuestras normas son independientes.</li>
+<li>Asegúrate de leer la descripción de cada producto antes de comprar.</li>
+<li>Para cualquier duda o problema con tu compra, por favor, contáctanos directamente a través de Discord.</li>
+</ul>
+<p>¡Gracias por elegir Frabian's Store!</p>
+</section>
+<footer id="contact">
+<p>¿Listo para adquirir tus productos? ¡Contáctanos!</p>
+<div class="social-links">
+<a href="https://discord.com/users/theonlyreaal" target="_blank" title="Contactar a theonlyreaal en Discord"><i class="fab fa-discord"></i> theonlyreaal</a>
+</div>
+<p style="margin-top: 20px; font-size: 0.9em;">© 2024 Frabian's Store. Todos los derechos reservados.</p>
+</footer>
+</div>
+<!-- Modal Structure -->
+<div class="modal" id="purchaseModal">
+<div class="modal-content">
+<span class="close-button">×</span>
+<h3 id="modalTitle">¡Compra Iniciada!</h3>
+<p id="modalMessage">Has iniciado la compra de <strong id="modalProductName"></strong>. Por favor, completa el pago en PayPal.</p>
+<p>Una vez completado el pago, **envía un mensaje directo a mi Discord** para coordinar la entrega de tu producto:</p>
+<p style="font-weight: bold; font-size: 1.3em; color: var(--accent-cyan); text-shadow: 0 0 8px var(--accent-cyan);"><i class="fab fa-discord"></i> theonlyreaal</p>
+<div class="modal-buttons">
+<a class="btn-discord" href="https://discord.com/users/theonlyreaal" target="_blank"><i class="fab fa-discord"></i> Ir a Discord</a>
+<button class="btn-cancel">Cerrar</button>
+</div>
+</div>
+</div>
+<!-- Particles.js Library -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    // Initialize Particles.js
+    particlesJS('particles-js', {
+      "particles": {
+        "number": {
+          "value": 100,
+          "density": {
+            "enable": true,
+            "value_area": 900
+          }
+        },
+        "color": {
+          "value": ["#00FFFF", "#FF00FF", "#00FF00"] /* RGB colors */
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          }
+        },
+        "opacity": {
+          "value": 0.6,
+          "random": true,
+          "anim": {
+            "enable": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 120,
+          "color": "#8A2BE2", /* Purple for lines */
+          "opacity": 0.5,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 4,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 140,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 100,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    });
+
+    // --- Preloader Logic ---
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      preloader.classList.add('hidden');
+    });
+
+    // --- Smooth Scroll Logic ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // --- Stock Initialization and Counter Logic ---
+    document.addEventListener('DOMContentLoaded', () => {
+      // Function to get a random integer between min and max (inclusive)
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      const products = document.querySelectorAll('li[data-stock]');
+
+      products.forEach(product => {
+        const sectionId = product.closest('section').id; // Get the ID of the parent section
+
+        // Set initial stock based on section
+        if (sectionId === 'variedad') {
+          product.dataset.initialStock = 'Infinity';
+        } else {
+          // For Armaduras, Espadas, Herramientas
+          product.dataset.initialStock = getRandomInt(3, 10).toString();
+        }
+
+        let currentStock = product.dataset.initialStock;
+        const stockValueSpan = product.querySelector('.stock-value');
+        const buyButton = product.querySelector('.buy-button');
+
+        function updateStockDisplay() {
+          const stockIndicator = product.querySelector('.stock-indicator');
+
+          if (currentStock === 'Infinity') {
+            stockValueSpan.textContent = 'Ilimitado';
+            stockIndicator.classList.remove('low', 'out-of-stock');
+            stockIndicator.innerHTML = `<i class="fas fa-infinity"></i> Stock: <span class="stock-value">Ilimitado</span>`;
+            buyButton.disabled = false;
+            buyButton.textContent = 'Comprar';
+            buyButton.style.background = ''; // Reset to default gradient
+            buyButton.style.color = ''; // Reset to default text color
+            buyButton.style.cursor = '';
+          } else {
+            currentStock = parseInt(currentStock);
+            stockValueSpan.textContent = currentStock;
+
+            if (currentStock <= 0) {
+              stockIndicator.classList.add('out-of-stock');
+              stockIndicator.innerHTML = '<i class="fas fa-times-circle"></i> Agotado';
+              buyButton.disabled = true;
+              buyButton.textContent = 'Agotado';
+            } else if (currentStock <= 5) {
+              stockIndicator.classList.add('low');
+              stockIndicator.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Stock: <span class="stock-value">${currentStock}</span> (¡Bajo!)`;
+              buyButton.disabled = false;
+              buyButton.textContent = 'Comprar';
+            } else {
+              stockIndicator.classList.remove('low', 'out-of-stock');
+              stockIndicator.innerHTML = `<i class="fas fa-check-circle"></i> Stock: <span class="stock-value">${currentStock}</span>`;
+              buyButton.disabled = false;
+              buyButton.textContent = 'Comprar';
+            }
+          }
+        }
+
+        updateStockDisplay();
+
+        if (currentStock !== 'Infinity') {
+          setInterval(() => {
+            if (currentStock > 0) {
+              currentStock--;
+              updateStockDisplay();
+            }
+          }, 300000); // 5 minutes
+        }
+      });
+
+      // --- PayPal and Discord Integration ---
+      const buyButtons = document.querySelectorAll('.buy-button');
+      const paypalEmail = 'elprodskills@gmail.com'; // ¡TU EMAIL DE PAYPAL!
+
+      const purchaseModal = document.getElementById('purchaseModal');
+      const closeButton = purchaseModal.querySelector('.close-button');
+      const modalProductName = document.getElementById('modalProductName');
+      const modalCancelButton = purchaseModal.querySelector('.btn-cancel');
+
+      buyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const productName = this.dataset.product;
+          const productPrice = parseFloat(this.dataset.price).toFixed(2);
+
+          // Open PayPal checkout
+          const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${paypalEmail}&item_name=${encodeURIComponent(productName)}&amount=${productPrice}&currency_code=EUR&no_shipping=1&return=URL_DE_CONFIRMACION&cancel_return=URL_DE_CANCELACION`;
+          
+          window.open(paypalUrl, '_blank');
+
+          // Show Discord contact modal
+          modalProductName.textContent = productName;
+          purchaseModal.style.display = 'flex';
+        });
+      });
+
+      closeButton.addEventListener('click', () => {
+        purchaseModal.style.display = 'none';
+      });
+
+      modalCancelButton.addEventListener('click', () => {
+        purchaseModal.style.display = 'none';
+      });
+
+      window.addEventListener('click', (event) => {
+        if (event.target == purchaseModal) {
+          purchaseModal.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
